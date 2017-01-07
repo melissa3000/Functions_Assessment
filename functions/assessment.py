@@ -59,8 +59,27 @@ included in the doctest.
 #    (a) Write a function that takes a town name as a string and evaluates to
 #        `True` if it is your hometown, and `False` otherwise.
 
+def is_my_home_town(town):
+    """ 
+    function returns True if town entered is my home town"""
+
+    return town == "Atlanta"
+
+#tests:
+#print is_my_home_town("Atlanta")
+#print is_my_home_town("SF")
+
 #    (b) Write a function that takes a first and last name as arguments and
 #        returns the concatenation of the two names in one string.
+
+def combines_firstname_lastname(first_name, last_name):
+    """
+    Takes first name and last name and concatenates them into one string."""
+
+    return first_name + " " + last_name
+
+#tests:
+#print combines_firstname_lastname("Melissa", "Boyer")
 
 #    (c) Write a function that takes a home town, a first name, and a last name
 #        as arguments, calls both functions from part (a) and (b) and prints
@@ -68,7 +87,19 @@ included in the doctest.
 #        here', where are you from?" depending on what the function from part
 #        (a) evaluates to.
 
+def greets_user(town, first_name, last_name):
+    """
+    Greets user by name and town.
+    Greeting varies if user is from my hometown or from another town"""
 
+    if is_my_home_town(town) == True:
+        print "Hi, {} {}, we're from the same place!".format(first_name, last_name)
+    else:
+        print "Hi, {} {}, where are you from?".format(first_name, last_name)
+
+# Tests:
+# greets_user("Atlanta", "Jon", "Snow")
+# greets_user("Oakland", "Bob", "Marley")
 
 ###############################################################################
 
@@ -82,7 +113,20 @@ included in the doctest.
 def is_berry(fruit):
     """Determines if fruit is a berry"""
 
-    pass
+    if "strawberry" in fruit:
+        return True
+    if "cherry" in fruit:
+        return True
+    if "blackberry" in fruit:
+        return True
+    else:
+        return False
+    
+    #Working to find a less repetitive solution
+    # berries = ["strawberry", "cherry", "blackberry"]
+
+    # if berries in fruit:
+    #     return True
 
 
 # (b) Write another function, shipping_cost(), which calculates shipping cost
@@ -92,8 +136,10 @@ def is_berry(fruit):
 
 def shipping_cost(fruit):
     """Calculates shipping cost of fruit"""
-
-    pass
+    if is_berry(fruit) == True:
+        return 0
+    else:
+        return 5
 
 
 # 2. Make a function that takes in a number and a list of numbers. It should
@@ -104,8 +150,15 @@ def append_to_list(lst, num):
     """Creates a new list consisting of the old list with the given number
        added to the end."""
 
-    pass
+    lst.append(num)
+    return lst
 
+#Would the above be more clear if lst was renamed to updated list, even though 
+#it's not required to work correctly? The code below works and seems more clear, 
+#but the program works either way. Not sure if I'm overthinking it.
+    # lst.append(num)
+    # updated_list = lst
+    # return updated_list
 
 
 # 3. Write a function calculate_price to calculate an item's total cost by
@@ -124,11 +177,45 @@ def append_to_list(lst, num):
 #    Your function should return the total cost of the item, including tax and
 #    fees.
 
-def calculate_price(FILL_ME_IN):
-
-    pass
 
 
+
+def calculate_price(base_price, state, tax_rate = .05):
+    """
+    Calculates item price with taxes and fees depending on state."""
+
+    item_with_tax = base_price + (base_price * tax_rate)
+
+    if state == "CA":
+        return round(item_with_tax + (item_with_tax * .03), 1) 
+    if state == "PA":
+        return item_with_tax + 2
+    if state == "MA" and base_price < 100:
+        return item_with_tax + 1
+    if state == "MA" and base_price >= 100:
+        return item_with_tax + 3
+    else:
+        return item_with_tax
+
+
+#started here, but couldn't get the output formatted correctly for CA
+    # print "base price: ", base_price
+    # print "tax rate: ", tax_rate
+    # print "item_with_tax: ", item_with_tax
+
+    # if state == "CA":
+    #     fees = int(item_with_tax) * .03
+    # if state == "PA":
+    #     fees = 2
+    # if state == "MA" and base_price < 100:
+    #     fees = 1
+    # if state == "MA" and base_price >= 100:
+    #     fees = 3
+    # if state != "CA" and state != "PA" and state != "MA":
+    #     fees = 0
+    # total_cost = item_with_tax + fees
+
+    # return total_cost
 ###############################################################################
 
 # PART THREE: ADVANCED
@@ -143,6 +230,17 @@ def calculate_price(FILL_ME_IN):
 # isn't something we've discussed yet in class; you might need to google how to
 # write a Python function that takes in an arbitrary number of arguments.
 
+def adds_unknown_number_of_items_to_list(lst, *args):
+    """
+    Adds an unknown number of items to the end of list lst"""
+    for arg in args:
+        lst.append(arg)
+    return lst
+
+#tests:
+# numbers = [1, 2, 3, 4]
+# print adds_unknown_number_of_items_to_list(numbers, 1, 2, 3)
+
 
 # 2. Make a new function with a nested inner function.
 # The outer function will take in a word.
@@ -156,6 +254,17 @@ def calculate_price(FILL_ME_IN):
 #>>> outer("Balloonicorn")
 #('Balloonicorn', 'BalloonicornBalloonicornBalloonicorn')
 
+def prints_word_three_times(word): 
+    """
+    Prints the input word once and then three times"""
+    result = ''
+    def multiply_by_3(word):
+        return word * 3
+
+    return word, multiply_by_3(word)
+
+#tests
+#print prints_word_three_times("hello")
 
 ###############################################################################
 
